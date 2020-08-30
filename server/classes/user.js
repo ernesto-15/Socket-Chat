@@ -12,7 +12,7 @@ class User {
   }
 
   //Delete a person by id
-  deletPerson(id) {
+  deletePerson(id) {
     const deletedPerson = this.getPerson(id);
     this.people = this.people.filter((person) => person.id !== id);
     return deletedPerson;

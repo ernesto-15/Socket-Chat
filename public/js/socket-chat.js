@@ -22,10 +22,10 @@ socket.on('connect', () => {
   );
 });
 
-//Client disconecction
+//Client disconnection
 socket.on('disconnect', () => console.log('Connection lost'));
 
-//Escuchar informacion
+//Listen to the message
 socket.on('sendMessage', (message) => {
   console.log('Sever message', message);
 });
