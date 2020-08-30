@@ -5,10 +5,10 @@ class User {
   }
 
   //Add a new person
-  addPerson(id, name) {
-    const person = { id, name };
+  addPerson(id, name, room) {
+    const person = { id, name, room };
     this.people.push(person);
-    return this.people;
+    return person;
   }
 
   //Delete a person by id
@@ -27,6 +27,11 @@ class User {
   //Get all people
   getPeople() {
     return this.people;
+  }
+
+  getPeopleByRoom(room) {
+    const peopleByRoom = this.people.filter(person => person.room === room)
+    return peopleByRoom
   }
 
 }

@@ -1,40 +1,46 @@
 const socket = io();
 
 //Get params
-const params = new URLSearchParams(window.location.search)
+const params = new URLSearchParams(window.location.search);
 //Check name param
-if(!params.has('name')) {
-  window.location = 'index.html'
-  throw new Error('Name is necessary')
+if (!params.has('name') || !params.has('room')) {
+  window.location = 'index.html';
+  throw new Error('Name and group are necessary');
 }
 //User from param
 const user = {
-  name: params.get('name')
-}
+  name: params.get('name'),
+  room: params.get('room'),
+};
 
-//Client conecction
+//Client connection
 socket.on('connect', () => {
-  console.log('Connected to the server')
-  //Emint joinChat event
-  socket.emit('joinChat', user, (resp) => console.log('Users connected', resp))
+  console.log('Connected to the server');
+  //Emit joinChat event, Send user connected
+  socket.emit('joinChat', user, (resp) =>
+    console.log('You are connected', resp)
+  );
 });
 
 //Client disconecction
 socket.on('disconnect', () => console.log('Connection lost'));
 
-//Send Information
-socket.emit(
-  'sendMessage',
-  {
-    user: 'Ernesto',
-    message: 'Hello World',
-  },
-  (response) => {
-    console.log('Server Response: ', response);
-  }
-);
-
 //Escuchar informacion
 socket.on('sendMessage', (message) => {
-  console.log('Sever', message);
+  console.log('Sever message', message);
+});
+
+//Send a private message
+socket.on('privateMessage', (message) => {
+  console.log('Private message', message);
+});
+
+//Sending a message
+// socket.emit('sendMessage', {
+//   user:
+// })
+
+//Users joining and leaving chat
+socket.on('listPerson', (people) => {
+  console.log('People in chat', people);
 });
