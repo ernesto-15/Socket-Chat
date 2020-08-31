@@ -23,6 +23,7 @@ io.on('connection', (client) => {
     const person = users.addPerson(client.id, user.name, user.room);
     //List all people connected in the chat in a specific room
     client.broadcast.to(user.room).emit('listPerson', users.getPeopleByRoom(user.room));
+    client.broadcast.to(user.room).emit('sendMessage', createMessage('Admin', `${user.name} joined chat`));
     //Server response
     callback({
       joined: person,
@@ -39,11 +40,12 @@ io.on('connection', (client) => {
 
 
   //Listen to event sendMessage
-  client.on('sendMessage', (data) => {
+  client.on('sendMessage', (data, callback) => {
     const person = users.getPerson(client.id)
     const message = createMessage(person.name, data.message)
     //Send message to a specific room
     client.broadcast.to(person.room).emit('sendMessage', message)
+    callback(message)
   })
 
   //Listen to event privateMessage
