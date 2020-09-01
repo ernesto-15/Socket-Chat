@@ -19,6 +19,7 @@ socket.on('connect', () => {
   //Emit joinChat event, Send user connected
   socket.emit('joinChat', user, (resp) =>
     // console.log('You are connected', resp)
+    //Render all users inside a room
     renderUsers(resp.allInRoom)
   );
 });
@@ -28,6 +29,7 @@ socket.on('disconnect', () => console.log('Connection lost'));
 
 //Listen to the message
 socket.on('sendMessage', (message) => {
+  //Render message
   renderMessage(message, false)
   scrollBottom()
 
@@ -38,13 +40,9 @@ socket.on('privateMessage', (message) => {
   console.log('Private message', message);
 });
 
-//Sending a message
-// socket.emit('sendMessage', {
-//   user:
-// })
-
 //Users joining and leaving chat
 socket.on('listPerson', (people) => {
   console.log('People in chat', people);
+  //Render people inside a room
   renderUsers(people)
 });

@@ -8,7 +8,7 @@ const txtMessage = document.querySelector('#txtMessage');
 const divChatbox = document.querySelector('#divChatbox');
 const divChatboxJQ = $('#divChatbox')
 
-//Render users functions
+//Render users
 function renderUsers(people) {
   let html = `
   <li>
@@ -40,6 +40,7 @@ function renderUsers(people) {
   userDiv.innerHTML = html;
 }
 
+//Render messages
 let html = '';
 function renderMessage(message, me) {
   const date = new Date(message.date)
@@ -81,12 +82,11 @@ function renderMessage(message, me) {
     `;
   }
 
-
   divChatbox.innerHTML = html;
 }
 
+//Scroll function
 function scrollBottom() {
-
   // selectors
   var newMessage = divChatboxJQ.children('li:last-child');
 
@@ -103,13 +103,6 @@ function scrollBottom() {
 }
 
 //Listeners
-
-// $('#divUsuarios').on('click', 'a', function() {
-//   let id = $(this).data('id')
-//   if(id) {
-//     console.log(id)
-//   }
-// })
 
 userDiv.addEventListener('click', function (e) {
   let target;
